@@ -13,7 +13,7 @@ DWORD WINAPI MainThread(HMODULE hModule)
 
     std::cout << "All my homies usin' dat shit\n";
     std::cout << "Use numpad to operate cheat\n";
-    std::cout << "1. Endless energy(please wait 5 sec before use), num2 to off.\n2. Endless skills, num4 to off\n";
+    std::cout << "1. Endless energy(please wait 3 sec before use)(only 1st live), num2 to off.\n2. Endless skills, num4 to off\n";
     std::cout << "Only one can work at the same time\n";
 
     bool bEnergy = false;
@@ -31,7 +31,7 @@ DWORD WINAPI MainThread(HMODULE hModule)
             if (!bEnergy)
             {
                 bEnergy = true;
-                std::cout << "Energy is Active\n";
+                std::cout << "Endless energy is Active\n";
             }
 
             while (bEnergy)
@@ -45,7 +45,7 @@ DWORD WINAPI MainThread(HMODULE hModule)
                     if (bEnergy)
                     {
                         bEnergy = false;
-                        std::cout << "Energy is not Active\n";
+                        std::cout << "Endless energy is not Active\n";
                     }
                 }
             }
