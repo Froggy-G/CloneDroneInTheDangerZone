@@ -1,8 +1,15 @@
 ﻿#include <Windows.h>
 #include <iostream>
 #include <vector>
+#include <map>
 #include "memory.h"
 #include "utils.h"
+
+void ReverseBoolValue(bool* value)
+{
+    *value = !*value;
+    std::cout << "Operation is " << *value << "\n";
+}
 
 DWORD WINAPI MainThread(HMODULE hModule)
 {
@@ -13,8 +20,7 @@ DWORD WINAPI MainThread(HMODULE hModule)
 
     std::cout << "All my homies usin' dat shit\n";
     std::cout << "Use numpad to operate cheat\n";
-    std::cout << "1. Endless energy(please wait 3 sec before use)(only 1st live), num2 to off.\n2. Endless skills, num4 to off\n";
-    std::cout << "Only one can work at the same time\n";
+    std::cout << "1. Endless energy(only 1st live)\n2. Endless skills\n";
 
     bool bEnergy = false;
     bool bSkills = false;
@@ -24,43 +30,30 @@ DWORD WINAPI MainThread(HMODULE hModule)
 
     while (!GetAsyncKeyState(VK_END))
     {
+        // ALL FUNCTIONS:
         // Endless energy
-        if (GetAsyncKeyState(VK_NUMPAD1))
+        if (bEnergy)
         {
-            bEnergy = !bEnergy;
-            std::cout << "Endless energy is Active\n";
-
-            while (bEnergy)
-            {
-                float* Energy = (float*)GetPointerAddress(moduleBase + mem::Energy, mem::EnergyOffsets);
-                *Energy = 4.0f;
-                Sleep(100);
-
-                if (GetAsyncKeyState(VK_NUMPAD2))
-                {
-                    bEnergy = !bEnergy;
-                    std::cout << "Endless energy is not Active\n";
-                }
-            }
+            float* Energy = (float*)GetPointerAddress(moduleBase + mem::Energy, mem::EnergyOffsets);
+            *Energy = 4.0f;
+            Sleep(100);
         }
 
         // Endless skills
-        if (GetAsyncKeyState(VK_NUMPAD3))
+        if (bSkills)
         {
-            bSkills = !bSkills;
-            std::cout << "Endless skills is Active\n";
+            int* Skills = (int*)GetPointerAddress(moduleBase + mem::Skills, mem::SkillsOffsets);
+            *Skills = 1;
+        }
 
-            while (bSkills)
-            {
-                int* Skills = (int*)GetPointerAddress(moduleBase + mem::Skills, mem::SkillsOffsets);
-                *Skills = 1;
+        if (GetAsyncKeyState(VK_NUMPAD1) & 1)
+        {
+            ReverseBoolValue(&bEnergy);
+        }
 
-                if (GetAsyncKeyState(VK_NUMPAD4))
-                {
-                    bSkills = !bSkills;
-                    std::cout << "Endless skills is not Active\n";
-                }
-            }
+        if (GetAsyncKeyState(VK_NUMPAD2) & 1)
+        {
+            ReverseBoolValue(&bSkills);
         }
     }
 
