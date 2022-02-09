@@ -1,14 +1,13 @@
 ﻿#include <Windows.h>
 #include <iostream>
 #include <vector>
-#include <map>
 #include "memory.h"
 #include "utils.h"
 
-void ReverseBoolValue(bool* value)
+void ReverseBoolValue(bool* value, std::string NameOfOperation)
 {
     *value = !*value;
-    std::cout << "Operation is " << *value << "\n";
+    std::cout << NameOfOperation << " is " << *value << "\n";
 }
 
 DWORD WINAPI MainThread(HMODULE hModule)
@@ -31,7 +30,12 @@ DWORD WINAPI MainThread(HMODULE hModule)
     while (!GetAsyncKeyState(VK_END))
     {
         // ALL FUNCTIONS:
-        // Endless energy
+        if (GetAsyncKeyState(VK_NUMPAD1) & 1)
+        {
+            std::string NameOfOperation = "Endless energy";
+            ReverseBoolValue(&bEnergy, NameOfOperation);
+        }
+
         if (bEnergy)
         {
             float* Energy = (float*)GetPointerAddress(moduleBase + mem::Energy, mem::EnergyOffsets);
@@ -39,21 +43,16 @@ DWORD WINAPI MainThread(HMODULE hModule)
             Sleep(100);
         }
 
-        // Endless skills
+        if (GetAsyncKeyState(VK_NUMPAD2) & 1)
+        {
+            std::string NameOfOperation = "Endless skills";
+            ReverseBoolValue(&bSkills, NameOfOperation);
+        }
+
         if (bSkills)
         {
             int* Skills = (int*)GetPointerAddress(moduleBase + mem::Skills, mem::SkillsOffsets);
             *Skills = 1;
-        }
-
-        if (GetAsyncKeyState(VK_NUMPAD1) & 1)
-        {
-            ReverseBoolValue(&bEnergy);
-        }
-
-        if (GetAsyncKeyState(VK_NUMPAD2) & 1)
-        {
-            ReverseBoolValue(&bSkills);
         }
     }
 
@@ -67,10 +66,7 @@ DWORD WINAPI MainThread(HMODULE hModule)
     return 0;
 }
 
-BOOL APIENTRY DllMain(HMODULE hModule,
-   DWORD  ul_reason_for_call,
-   LPVOID lpReserved
-)
+BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)
 {
     switch (ul_reason_for_call)
     {
