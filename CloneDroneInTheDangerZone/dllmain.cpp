@@ -19,7 +19,6 @@ DWORD WINAPI MainThread(HMODULE hModule)
     bool bEnergy = false;
     bool bSkills = false;
     
-    Sleep(2000);
     uintptr_t moduleBase = (uintptr_t)GetModuleHandle(L"Clone Drone in the Danger Zone.exe"); // for .exe file
     moduleBase = (uintptr_t)GetModuleHandle(L"UnityPlayer.dll"); // for .dll file or null
 
@@ -28,11 +27,8 @@ DWORD WINAPI MainThread(HMODULE hModule)
         // Endless energy
         if (GetAsyncKeyState(VK_NUMPAD1))
         {
-            if (!bEnergy)
-            {
-                bEnergy = true;
-                std::cout << "Endless energy is Active\n";
-            }
+            bEnergy = !bEnergy;
+            std::cout << "Endless energy is Active\n";
 
             while (bEnergy)
             {
@@ -42,11 +38,8 @@ DWORD WINAPI MainThread(HMODULE hModule)
 
                 if (GetAsyncKeyState(VK_NUMPAD2))
                 {
-                    if (bEnergy)
-                    {
-                        bEnergy = false;
-                        std::cout << "Endless energy is not Active\n";
-                    }
+                    bEnergy = !bEnergy;
+                    std::cout << "Endless energy is not Active\n";
                 }
             }
         }
@@ -54,11 +47,8 @@ DWORD WINAPI MainThread(HMODULE hModule)
         // Endless skills
         if (GetAsyncKeyState(VK_NUMPAD3))
         {
-            if (!bSkills)
-            {
-                bSkills = true;
-                std::cout << "Endless skills is Active\n";
-            }
+            bSkills = !bSkills;
+            std::cout << "Endless skills is Active\n";
 
             while (bSkills)
             {
@@ -67,11 +57,8 @@ DWORD WINAPI MainThread(HMODULE hModule)
 
                 if (GetAsyncKeyState(VK_NUMPAD4))
                 {
-                    if (bSkills)
-                    {
-                        bSkills = false;
-                        std::cout << "Endless skills is not Active\n";
-                    }
+                    bSkills = !bSkills;
+                    std::cout << "Endless skills is not Active\n";
                 }
             }
         }
@@ -88,8 +75,8 @@ DWORD WINAPI MainThread(HMODULE hModule)
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule,
-    DWORD  ul_reason_for_call,
-    LPVOID lpReserved
+   DWORD  ul_reason_for_call,
+   LPVOID lpReserved
 )
 {
     switch (ul_reason_for_call)
