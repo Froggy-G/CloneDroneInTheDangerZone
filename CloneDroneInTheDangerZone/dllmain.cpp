@@ -17,7 +17,7 @@ DWORD WINAPI MainThread(HMODULE hModule)
     FILE* f;
     freopen_s(&f, "CONOUT$", "w", stdout);
 
-    std::cout << "All my homies usin' dat shit\n";
+    std::cout << "I eat it all, I have no choice\n";
     std::cout << "Use numpad to operate cheat, press End to exit\n";
     std::cout << "1. Endless energy(only 1st live)\n2. Endless skills\n\n";
 
