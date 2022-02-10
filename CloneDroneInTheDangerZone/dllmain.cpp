@@ -18,8 +18,8 @@ DWORD WINAPI MainThread(HMODULE hModule)
     freopen_s(&f, "CONOUT$", "w", stdout);
 
     std::cout << "All my homies usin' dat shit\n";
-    std::cout << "Use numpad to operate cheat\n";
-    std::cout << "1. Endless energy(only 1st live)\n2. Endless skills\n";
+    std::cout << "Use numpad to operate cheat, press End to exit\n";
+    std::cout << "1. Endless energy(only 1st live)\n2. Endless skills\n\n";
 
     bool bEnergy = false;
     bool bSkills = false;
@@ -32,8 +32,7 @@ DWORD WINAPI MainThread(HMODULE hModule)
         // ALL FUNCTIONS:
         if (GetAsyncKeyState(VK_NUMPAD1) & 1)
         {
-            std::string NameOfOperation = "Endless energy";
-            ReverseBoolValue(&bEnergy, NameOfOperation);
+            ReverseBoolValue(&bEnergy, "Endless energy");
         }
 
         if (bEnergy)
@@ -45,8 +44,7 @@ DWORD WINAPI MainThread(HMODULE hModule)
 
         if (GetAsyncKeyState(VK_NUMPAD2) & 1)
         {
-            std::string NameOfOperation = "Endless skills";
-            ReverseBoolValue(&bSkills, NameOfOperation);
+            ReverseBoolValue(&bSkills, "Endless skills");
         }
 
         if (bSkills)
